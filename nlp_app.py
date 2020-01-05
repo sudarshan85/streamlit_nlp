@@ -43,9 +43,13 @@ def sumy_summarizer(text):
 
 def main():
   st.title("NLP App with Streamlit")
+  st.markdown("Welcome! This is a simple NLP application created using Streamlit and deployed on Heroku.")
+  st.markdown("In the box below, you can type custom text or paste an URL from which text is extracted. Once you have a the text, open the sidebar and choose any of the four applications. Currently, we have applications to tokenize text, extract entitiles, analyze sentiment, and summarize text (and a suprise! :wink:).")
+  st.markdown("You can preview a percentage of your text by selecting a value on the slider and clicking on \"Preview\"")
+  
   nlp = load_spacy()
 
-  text = fetch_text(st.text_area("Enter Text (or URL) and select application from sidebar", "Type Here"))
+  text = fetch_text(st.text_area("Enter Text (or URL) and select application from sidebar", "Here is some sample text. When inputing your custom text or URL make sure you delete this text!"))
 
   pct = st.slider("Preview length (%)", 0, 100)
   length = (len(text) * pct)//100
@@ -54,7 +58,7 @@ def main():
   if st.button("Preview"):
     st.write(preview_text)
 
-  apps = ['Show tokens & lemmas', 'Extract Entities', 'Show sentiment', 'Summarize text']
+  apps = ['Show tokens & lemmas', 'Extract Entities', 'Show sentiment', 'Summarize text', 'Suprise']
   choice = st.sidebar.selectbox("Select Application", apps)
   if choice == "Show tokens & lemmas":
     if st.button("Tokenize"):
@@ -86,6 +90,10 @@ def main():
 
     if st.button(f"Summarize using {summarizer_type}"):
       st.success(summarizer(text))
+  elif choice == 'Suprise':
+    st.balloons()
+
+  st.markdown("The code for this app can be found in [this](https://github.com/sudarshan85/streamlit_nlp) Github repository.")    
   
 if __name__ == "__main__":
   main()
