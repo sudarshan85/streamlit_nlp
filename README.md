@@ -12,3 +12,5 @@ Here is a list of the tutorial videos that was used to create this app:
 1. [Building a NLP App with Streamlit,Spacy and Python (NER,Sentiment Analyser,Summarizer)](https://youtu.be/6acv9LL6gHg)
 2. [How To Deploy Streamlit Apps (Using Heroku)](https://youtu.be/skpiLtEN3yk)
 3. [Building a Summarizer and Named Entity Checker NLP App with Streamlit and SpaCy](https://youtu.be/ftySGn13k8w)
+
+The app is hosted on [Heroku](https://www.heroku.com/home) and you can access it [here](https://streamlit-nlp.herokuapp.com/). It is hosted on a free account and server will sleep after 30 minutes of inactivity. So please give it 10-15 seconds to wake up.
