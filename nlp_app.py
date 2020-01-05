@@ -28,12 +28,12 @@ def load_spacy(model='en_core_web_sm'):
 def analyze_text(sp_model, text):
   return sp_model(text)
 
-def fetch_text(text):
+def fetch_text_from_url(text):
   try:
     page = requests.get(text)
     soup = BeautifulSoup(page.text)
     return ' '.join(map(lambda p: p.text, soup.find_all('p')))
-  except (requests.exceptions.InvalidURL, requests.exceptions.MissingSchema):
+  except (requests.exceptions.InvalidURL, requests.exceptions.MissingSchema, requests.exceptions.InvalidSchema):
     return text
 
 def sumy_summarizer(text):
@@ -45,9 +45,16 @@ def main():
   st.title("NLP App with Streamlit")
   nlp = load_spacy()
 
-  text = fetch_text(st.text_area("Enter Text (or URL) and select application from sidebar", "Type Here"))
-  apps = ['Show tokens & lemmas', 'Extract Entities', 'Show sentiment', 'Summarize text']
+  text = fetch_text_from_url(st.text_area("Enter Text (or URL) and select application from sidebar", "Type Here"))
 
+  pct = st.slider("Preview length (%)", 0, 100)
+  length = (len(text) * pct)//100
+  preview_text = text[:length]
+
+  if st.button("Preview"):
+    st.write(preview_text)
+
+  apps = ['Show tokens & lemmas', 'Extract Entities', 'Show sentiment', 'Summarize text']
   choice = st.sidebar.selectbox("Select Application", apps)
   if choice == "Show tokens & lemmas":
     if st.button("Tokenize"):
