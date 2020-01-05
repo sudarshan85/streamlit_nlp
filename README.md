@@ -7,3 +7,8 @@ The tasks that are implemented are:
 2. Named Entity Recognition (using spaCy)
 3. Sentiment Analysis (using [TextBlob](https://textblob.readthedocs.io/en/dev/))
 4. Text summarization (using [gensim](https://radimrehurek.com/gensim/auto_examples/index.html) and  [sumy](https://github.com/miso-belica/sumy))
+
+Here is a list of the tutorial videos that was used to create this app:
+1. [Building a NLP App with Streamlit,Spacy and Python (NER,Sentiment Analyser,Summarizer)](https://youtu.be/6acv9LL6gHg)
+2. [How To Deploy Streamlit Apps (Using Heroku)](https://youtu.be/skpiLtEN3yk)
+3. [Building a Summarizer and Named Entity Checker NLP App with Streamlit and SpaCy](https://youtu.be/ftySGn13k8w)

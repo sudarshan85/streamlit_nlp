@@ -28,7 +28,7 @@ def load_spacy(model='en_core_web_sm'):
 def analyze_text(sp_model, text):
   return sp_model(text)
 
-def fetch_text_from_url(text):
+def fetch_text(text):
   try:
     page = requests.get(text)
     soup = BeautifulSoup(page.text)
@@ -45,7 +45,7 @@ def main():
   st.title("NLP App with Streamlit")
   nlp = load_spacy()
 
-  text = fetch_text_from_url(st.text_area("Enter Text (or URL) and select application from sidebar", "Type Here"))
+  text = fetch_text(st.text_area("Enter Text (or URL) and select application from sidebar", "Type Here"))
 
   pct = st.slider("Preview length (%)", 0, 100)
   length = (len(text) * pct)//100
