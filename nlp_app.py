@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 
+import requests
+import spacy
+
+import numpy as np
 import streamlit as st
 
+from bs4 import BeautifulSoup
 from ttictoc import TicToc
-import numpy as np
-import spacy
+
 from spacy import displacy
 from textblob import TextBlob
 from gensim.summarization import summarize as gensim_summarizer
@@ -24,9 +28,13 @@ def load_spacy(model='en_core_web_sm'):
 def analyze_text(sp_model, text):
   return sp_model(text)
 
-# def entity_extractor(sp_model, text):
-#   doc = sp_model(text)
-#   return {ent.text: ent.label_ for ent in doc.ents}
+def fetch_text(text):
+  try:
+    page = requests.get(text)
+    soup = BeautifulSoup(page.text)
+    return ' '.join(map(lambda p: p.text, soup.find_all('p')))
+  except (requests.exceptions.InvalidURL, requests.exceptions.MissingSchema):
+    return text
 
 def sumy_summarizer(text):
   parser = PlaintextParser.from_string(text, Tokenizer('english'))
@@ -37,7 +45,7 @@ def main():
   st.title("NLP App with Streamlit")
   nlp = load_spacy()
 
-  text = st.text_area("Enter Text and select application from sidebar", "Type Here")
+  text = fetch_text(st.text_area("Enter Text (or URL) and select application from sidebar", "Type Here"))
   apps = ['Show tokens & lemmas', 'Extract Entities', 'Show sentiment', 'Summarize text']
 
   choice = st.sidebar.selectbox("Select Application", apps)
@@ -69,8 +77,7 @@ def main():
     elif summarizer_type == 'Sumy Lex Rank':
       summarizer = sumy_summarizer
 
-    if st.button("Summarize"):
-      st.info(f"Using {summarizer_type} summarizer")
+    if st.button(f"Summarize using {summarizer_type}"):
       st.success(summarizer(text))
   
 if __name__ == "__main__":
