@@ -12,7 +12,7 @@ boto3==1.10.46
 botocore==1.13.46
 breadability==0.1.20
 catalogue==0.2.0
-certifi==2019.11.28
+certifi==2022.12.7
 chardet==3.0.4
 Click==7.0
 cycler==0.10.0
